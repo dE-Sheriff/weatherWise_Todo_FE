@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
+import requests
 from flask import Flask
 from config import Config
 from models import Task, db
 from flask_migrate import Migrate
 from app.routes import main  # Import the main blueprint
+
+
 
 def create_app():
     app = Flask(__name__)
