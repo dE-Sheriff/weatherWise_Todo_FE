@@ -88,11 +88,13 @@
 
     <main>
         <div class="container">
-            <!-- Left Section -->
-            <div class="left-section">
-                <h2>Todo Title</h2>
-                <input type="text" id="task-title" placeholder="Enter your task title...">
-                <h3>Category</h3>
+            <!-- Left and Right Section Container -->
+            <div class="top-section">
+                <!-- Left Section -->
+                <div class="left-section">
+                    <h2>Todo Title</h2>
+                    <input type="text" id="task-title" placeholder="Enter your task title...">
+                    <h3>Category</h3>
                 <select id="task-category" disabled>
                     <option value="" disabled selected>Select a category</option>
                     <option value="agricultural-work">Agricultural Work</option>
@@ -126,44 +128,73 @@
                     <option value="wildlife-observation">Wildlife Observation</option>
                 </select>
 
-                <div class="suggestion-options">
-                    <input type="checkbox" id="auto-suggest">
-                    <label for="auto-suggest">Suggest best time for the task</label>
+                    <div class="suggestion-options">
+                        <input type="checkbox" id="auto-suggest">
+                        <label for="auto-suggest">Suggest best time for the task</label>
 
-                    <select id="suggestion-period" disabled>
-                        <option value="24hours">In the next 24 Hours</option>
-                        <option value="week">In a Week's time</option>
-                        <option value="month">In a Month's time</option>
-                    </select>
+                        <select id="suggestion-period" disabled>
+                            <option value="24hours">In the next 24 Hours</option>
+                            <option value="week">In a Week's time</option>
+                            <option value="month">In a Month's time</option>
+                        </select>
 
-                    <h3>Task Location</h3>
-                    <input type="text" id="task-location" placeholder="Enter task coordinates (lat, lon)...">
-                    <div id="map" style="height: 400px; width: 100%;"></div>
+                        <h3>Task Location</h3>
+                        <input type="text" id="task-location" placeholder="Enter task coordinates (lat, lon)...">
+                        <div id="map" style="height: 400px; width: 100%;"></div>
+                    </div>
                 </div>
+
+                <!-- Right Section (Calendar and Date Pickers) -->
+                <div class="right-section">
+                    <div class="calendar-container">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="date-time-pickers">
+                        <div class="date-time-picker">
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date">
+                            <label for="start-time">Start Time:</label>
+                            <input type="time" id="start-time">
+                        </div>
+
+                        <div class="date-time-picker">
+                            <label for="end-date">End Date:</label>
+                            <input type="date" id="end-date">
+                            <label for="end-time">End Time:</label>
+                            <input type="time" id="end-time">
+                        </div>
+
+                        <button id="confirm-dates">OK</button>
+                    </div>
+                </div>
+            </div> <!-- End of Top Section -->
+
+            <!-- Remarks Section -->
+            <div class="remarks-section">
+                <h3>Remarks</h3>
+                <p id="remarks-text">The app will provide suggestions or analysis here based on your selected time.</p>
             </div>
 
-            <!-- Right Section (Calendar and Date Pickers) -->
-            <div class="right-section">
-                <div class="calendar-container">
-                    <div id="calendar"></div>
-                </div>
-                <div class="date-time-pickers">
-                    <div class="date-time-picker">
-                        <label for="start-date">Start Date:</label>
-                        <input type="date" id="start-date">
-                        <label for="start-time">Start Time:</label>
-                        <input type="time" id="start-time">
-                    </div>
-
-                    <div class="date-time-picker">
-                        <label for="end-date">End Date:</label>
-                        <input type="date" id="end-date">
-                        <label for="end-time">End Time:</label>
-                        <input type="time" id="end-time">
-                    </div>
-
-                    <button id="confirm-dates">OK</button>
-                </div>
+            <!-- Task Table for Current Day -->
+            <div class="task-table-section">
+                <h3>Tasks for Today</h3>
+                <table id="task-table">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Scheduled Time</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Task rows will be dynamically inserted here -->
+                        <tr>
+                            <td>Example Task</td>
+                            <td>10:00 AM</td>
+                            <td>Good time to proceed</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>

@@ -1,3 +1,28 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	/* Stack remarks and task table below */
+}
+
+.top-section {
+	display: flex;
+	justify-content: space-between;
+	/* Left and right sections side by side */
+}
+
+.left-section,
+.right-section {
+	width: 48%;
+	/* Adjust as needed to fit the design */
+}
+
+.remarks-section,
+.task-table-section {
+	margin-top: 20px;
+	width: 100%;
+	/* Full width */
+}
+
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
@@ -157,4 +182,20 @@ button:hover {
 	height: 400px;
 	/* or any height you want */
 	width: 100%;
+}
+
+#task-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#task-table th,
+#task-table td {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#task-table th {
+	background-color: #f2f2f2;
+	text-align: left;
 }
