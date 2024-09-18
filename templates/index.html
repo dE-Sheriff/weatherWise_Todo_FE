@@ -4,15 +4,15 @@
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/dist/fullcalendar.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/styles.css">
 
     <!-- FullCalendar and Leaflet JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeatherWise - Home</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
     
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -23,12 +23,13 @@
         });
         calendar.render();
 
-        // Initialize Leaflet map
+        // Initialize Leaflet map with OpenStreetMap tiles
         var map = L.map('map').setView([51.505, -0.09], 13); // Default to London coordinates
 
         // Add OpenStreetMap tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 18
         }).addTo(map);
 
         // Get user's current location
@@ -139,8 +140,11 @@
                         </select>
 
                         <h3>Task Location</h3>
-                        <input type="text" id="task-location" placeholder="Enter task coordinates (lat, lon)...">
-                        <div id="map" style="height: 400px; width: 100%;"></div>
+                        <div class="location-suggestions-container">
+                            <input type="text" id="task-location" placeholder="Enter task location...">
+                            <ul id="location-suggestions"></ul>
+                        </div>
+                        <div id="map"></div>
                     </div>
                 </div>
 

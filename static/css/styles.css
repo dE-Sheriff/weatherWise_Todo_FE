@@ -106,7 +106,7 @@ button:hover {
 }
 
 .fc .fc-day-today {
-	background-color: yellow !important;
+	background-color: rgb(125, 34, 70) !important;
 	/* Highlight today in yellow */
 }
 
@@ -114,6 +114,7 @@ button:hover {
 	background-color: transparent !important;
 	/* Ensure background events are transparent by default */
 }
+
 /* Container for the calendar */
 .calendar-container {
 	display: flex;
@@ -198,4 +199,101 @@ button:hover {
 #task-table th {
 	background-color: #f2f2f2;
 	text-align: left;
+}
+
+#location-suggestions {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #ccc;
+	max-height: 150px;
+	overflow-y: auto;
+	position: absolute;
+	background: white;
+	width: calc(100% - 20px);
+}
+
+#location-suggestions li {
+	padding: 8px;
+	cursor: pointer;
+}
+
+#location-suggestions li:hover {
+	background-color: #f0f0f0;
+}
+
+.location-suggestions-container {
+	position: relative;
+}
+
+#location-suggestions {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #ccc;
+	max-height: 150px;
+	overflow-y: auto;
+	position: absolute;
+	background: white;
+	width: calc(100% - 20px);
+	z-index: 1000;
+}
+
+#location-suggestions li {
+	padding: 8px;
+	cursor: pointer;
+}
+
+#location-suggestions li:hover {
+	background-color: #f0f0f0;
+}
+
+/* Adjust the font size of event titles */
+.fc .fc-event-title {
+	font-size: 14px;
+	/* Adjust this value as needed */
+}
+
+/* Adjust the font size of the day headers (e.g., Sun, Mon) */
+.fc .fc-col-header-cell {
+	font-size: 14px;
+	/* Adjust this value as needed */
+}
+
+/* Adjust the font size of day numbers */
+.fc .fc-daygrid-day-number {
+	font-size: 16px;
+	font-weight: bold;
+	/* Adjust this value as needed */
+}
+
+/* Adjust the font size of the month and year title */
+.fc .fc-header-title {
+	font-size: 14px;
+	/* Adjust this value as needed */
+	font-weight: bold;
+	/* Optional: Adjust font weight */
+}
+
+/* Adjust the size of the previous and next arrows */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+	font-size: 15px;
+	/* Adjust the font size of the arrows */
+	width: 30px;
+	/* Adjust the width of the button */
+	height: 30px;
+	/* Adjust the height of the button */
+}
+
+/* Adjust the font size of events/tasks in the calendar */
+.fc .fc-event-title {
+	font-size: 10px;
+	/* Adjust this value as needed */
+}
+
+/* Optional: Adjust the font size for event time if needed */
+.fc .fc-event-time {
+	font-size: 8px;
+	/* Adjust this v mm  alue as needed */
 }

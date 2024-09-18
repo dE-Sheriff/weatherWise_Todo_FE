@@ -88,4 +88,33 @@ def get_weather():
         return jsonify(weather_data)
     else:
         return jsonify({"error": "Please provide valid latitude and longitude."}), 400
-    
+
+@main.route('/fetch_weather', methods=['GET'])
+def fetch_weather():
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    api_key = 'fccb7140ec9703e9de31a771d85387e3'  # Replace with your OpenWeather API key
+    url = f'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={api_key}&units=metric'
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        weather_data = response.json()
+        return jsonify(weather_data)
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+# Define a route to add a new task
+@main.route('/add_task', methods=['POST'])
+def add_task():
+    data = request.json
+    new_task = Task(
+        title=data['title'],
+        category=data['category'],
+        location=data.get('location'),
+        start_date=data['start_date'],
+        end_date=data['end_date']
+    )
+    db.session.add(new_task)
+    db.session.commit()
+    return jsonify({'message': 'Task added successfully'}), 201

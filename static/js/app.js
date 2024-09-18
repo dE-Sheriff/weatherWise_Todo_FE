@@ -1,40 +1,59 @@
-// Task title input handler - Enable category selection after title length >= 10
-document.getElementById('task-title').addEventListener('input', function () {
-	const title = this.value;
-	const categorySelect = document.getElementById('task-category');
-	if (title.length >= 10) {
-		categorySelect.disabled = false;
-	} else {
-		categorySelect.disabled = true;
-	}
-});
-
-// Suggestion checkbox handler - Enable suggestion period dropdown
-document.getElementById('auto-suggest').addEventListener('change', function () {
-	const suggestionPeriod = document.getElementById('suggestion-period');
-	suggestionPeriod.disabled = !this.checked;
-});
-
-// Document ready function
-document.getElementById('task-title').addEventListener('input', function () {
-	const title = this.value;
-	const categorySelect = document.getElementById('task-category');
-	if (title.length >= 10) {
-		categorySelect.disabled = false;
-	} else {
-		categorySelect.disabled = true;
-	}
-});
-
-document.getElementById('auto-suggest').addEventListener('change', function () {
-	const suggestionPeriod = document.getElementById('suggestion-period');
-	suggestionPeriod.disabled = !this.checked;
-});
-
 document.addEventListener('DOMContentLoaded', function () {
+	const taskTitleInput = document.getElementById('task-title');
+	const categorySelect = document.getElementById('task-category');
+	const suggestionCheckbox = document.getElementById('auto-suggest');
+	const suggestionPeriod = document.getElementById('suggestion-period');
 	const calendarEl = document.getElementById('calendar');
 	const startDateInput = document.getElementById('start-date');
 	const endDateInput = document.getElementById('end-date');
+	const taskLocationInput = document.getElementById('task-location');
+	const locationSuggestions = document.getElementById('location-suggestions');
+
+	// Initialize Leaflet map
+	let map;
+	let marker;
+
+	// Initialize the map
+	function initLeafletMap(lat, lon) {
+		if (!map) {
+			// Initialize the map only if it hasn't been initialized
+			map = L.map('map').setView([lat, lon], 12);
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+
+			marker = L.marker([lat, lon]).addTo(map)
+				.bindPopup('Your Location')
+				.openPopup();
+		}
+	}
+
+	// Update Leaflet map with new coordinates
+	function updateLeafletMap(lat, lon) {
+		if (map) {
+			// If map already exists, update its view
+			map.setView([lat, lon], 12);
+			if (marker) {
+				marker.setLatLng([lat, lon]);
+			} else {
+				marker = L.marker([lat, lon]).addTo(map);
+			}
+			marker.bindPopup('Task Location').openPopup();
+		} else {
+			// If map doesn't exist, initialize it
+			initLeafletMap(lat, lon);
+		}
+	}
+
+	// Enable category selection after title length >= 10
+	taskTitleInput.addEventListener('input', function () {
+		categorySelect.disabled = this.value.length < 10;
+	});
+
+	// Enable suggestion period dropdown
+	suggestionCheckbox.addEventListener('change', function () {
+		suggestionPeriod.disabled = !this.checked;
+	});
 
 	// Initialize the calendar
 	const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -56,20 +75,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		]
 	});
 
-	// Render the calendar
 	calendar.render();
 
 	// Handle date selection logic
 	function handleDateSelection(dateStr) {
 		if (!startDateInput.value) {
 			startDateInput.value = dateStr;
-			clearHighlights(); // Clear previous highlights
-			highlightDate(dateStr, dateStr); // Highlight the start date
+			clearHighlights();
+			highlightDate(dateStr, dateStr);
 		} else if (!endDateInput.value) {
 			endDateInput.value = dateStr;
-			highlightDate(startDateInput.value, dateStr); // Highlight the range from start to end date
+			highlightDate(startDateInput.value, dateStr);
 		} else {
-			// Reset and start over
 			startDateInput.value = dateStr;
 			endDateInput.value = '';
 			clearHighlights();
@@ -85,12 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		while (currentDate <= endDate) {
 			calendar.addEvent({
-				start: currentDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+				start: currentDate.toISOString().split('T')[0],
 				allDay: true,
 				display: 'background',
-				backgroundColor: 'red' // Customize highlight color
+				backgroundColor: 'red'
 			});
-			currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+			currentDate.setDate(currentDate.getDate() + 1);
 		}
 	}
 
@@ -117,11 +134,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		// Call the weather API with user's lat and lon
 		fetchWeatherData(lat, lon);
+
+		// Initialize the map with user's location
+		initLeafletMap(lat, lon);
+
 	}
 
 	// Error callback for geolocation
 	function errorCallback(error) {
 		alert('Unable to retrieve your location.');
+		updateRemarks('Unable to retrieve your location.');
 	}
 
 	// Fetch weather data using OpenWeather API
@@ -133,75 +155,88 @@ document.addEventListener('DOMContentLoaded', function () {
 			.then(response => response.json())
 			.then(data => {
 				console.log('Weather data:', data);
-				// You can now use the weather data to influence task suggestions or events
+				const remarks = generateRemarks(data); // Process the data to create remarks
+				updateRemarks(remarks); // Update the remarks section
 			})
 			.catch(error => {
 				console.error('Error fetching weather data:', error);
+				updateRemarks('Error fetching weather data.');
 			});
 	}
-	function initMap() {
-		// Try to get user's current location
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				position => {
-					const userLocation = {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude
-					};
-					map = new google.maps.Map(document.getElementById('map'), {
-						center: userLocation,
-						zoom: 12
-					});
 
-					// Marker for user's location
-					marker = new google.maps.Marker({
-						position: userLocation,
-						map: map,
-						title: 'Your Location'
-					});
-				},
-				() => {
-					// Fallback if geolocation fails
-					handleLocationError(true);
-				}
-			);
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false);
+	// Generate remarks based on weather data
+	function generateRemarks(data) {
+		// Example logic to generate remarks based on weather data
+		if (data.list && data.list.length > 0) {
+			const weather = data.list[0].weather[0].description;
+			return `The weather for the selected period is ${weather}.`;
+		}
+		return 'No weather data available for the selected period.';
+	}
+
+	// Update the remarks section
+	function updateRemarks(remarks) {
+		const remarksElement = document.getElementById('remarks');
+		if (remarksElement) {
+			remarksElement.textContent = remarks; // or .innerHTML if the content is HTML
 		}
 	}
-});
 
-// Function to update the map with task location
-document.getElementById('task-location').addEventListener('input', function () {
-	const address = this.value;
+	// Send latitude and longitude to the server
+	function sendLocationToServer(latitude, longitude) {
+		fetch('/api/update-location', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				lat: latitude,
+				lon: longitude
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log('Location data sent successfully:', data);
+			})
+			.catch((error) => {
+				console.error('Error sending location data:', error);
+			});
+	}
 
-	const geocoder = new google.maps.Geocoder();
-	geocoder.geocode({ address: address }, function (results, status) {
-		if (status === 'OK') {
-			const taskLocation = results[0].geometry.location;
-			map.setCenter(taskLocation);
-
-			// Move marker to new task location
-			if (marker) {
-				marker.setPosition(taskLocation);
-			} else {
-				marker = new google.maps.Marker({
-					position: taskLocation,
-					map: map,
-					title: 'Task Location'
+	// Fetch location suggestions
+	function fetchLocationSuggestions(query) {
+		fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`)
+			.then(response => response.json())
+			.then(data => {
+				locationSuggestions.innerHTML = ''; // Clear previous suggestions
+				data.forEach(item => {
+					const li = document.createElement('li');
+					li.textContent = item.display_name;
+					li.dataset.lat = item.lat;
+					li.dataset.lon = item.lon;
+					li.addEventListener('click', function () {
+						const lat = this.dataset.lat;
+						const lon = this.dataset.lon;
+						taskLocationInput.value = this.textContent;
+						updateLeafletMap(lat, lon);
+						sendLocationToServer(lat, lon);
+						locationSuggestions.innerHTML = ''; // Clear suggestions
+					});
+					locationSuggestions.appendChild(li);
 				});
-			}
+			})
+			.catch(error => {
+				console.error('Error fetching location suggestions:', error);
+			});
+	}
+
+	// Handle input changes and fetch suggestions
+	taskLocationInput.addEventListener('input', function () {
+		const query = this.value;
+		if (query.length > 2) { // Fetch suggestions only if query is long enough
+			fetchLocationSuggestions(query);
 		} else {
-			alert('Geocode was not successful for the following reason: ' + status);
+			locationSuggestions.innerHTML = ''; // Clear suggestions if query is too short
 		}
 	});
 });
-
-function handleLocationError(browserHasGeolocation) {
-	const defaultLocation = { lat: -34.397, lng: 150.644 }; // Default location (fallback)
-	map = new google.maps.Map(document.getElementById('map'), {
-		center: defaultLocation,
-		zoom: 12
-	});
-}
