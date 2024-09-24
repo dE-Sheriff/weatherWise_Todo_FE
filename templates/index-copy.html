@@ -16,6 +16,12 @@
     
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // Initialize FullCalendar
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
 
         // Initialize Leaflet map with OpenStreetMap tiles
         var map = L.map('map').setView([51.505, -0.09], 13); // Default to London coordinates
@@ -82,106 +88,91 @@
     </header>
 
     <main>
-        <div class="new-task-title">
-            <h3 id="top-title">Add New Task</h3>
-            <div id="horizontal-line"></div>
-            <div id="new-task">
-                <h4 id="option-tag-main">Todo Title</h4>
-                <input type="text" id="todo-title" placeholder="Enter your task title...">
-                <button id="clear-entery-button">CLEAR</button>
-            </div>
-        </div>
         <div class="container">
             <!-- Left and Right Section Container -->
             <div class="top-section">
                 <!-- Left Section -->
                 <div class="left-section">
-                    <div class="task-details">
-                        <h4 id="option-tag">Task Category</h4>
-                        <select id="task-category" disabled>
-                            <option value="" disabled selected>Select a category</option>
-                            <option value="agricultural-work">Agricultural Work</option>
-                            <option value="baseball">Baseball</option>
-                            <option value="bbq">BBQs and Outdoor Cooking</option>
-                            <option value="camping">Camping</option>
-                            <option value="cleaning-maintenance">Cleaning and Maintenance</option>
-                            <option value="cycling">Cycling</option>
-                            <option value="construction-work">Construction Work</option>
-                            <option value="driving">Driving</option>
-                            <option value="exercise">Exercise</option>
-                            <option value="fishing">Fishing</option>
-                            <option value="gardening">Gardening</option>
-                            <option value="golfing">Golfing</option>
-                            <option value="hiking">Hiking</option>
-                            <option value="indoor">Indoor Activity</option>
-                            <option value="mental-health-activities">Mental Health Activities</option>
-                            <option value="outdoor-dining">Outdoor Dining</option>
-                            <option value="outdoor-events">Outdoor Events</option>
-                            <option value="photography">Photography</option>
-                            <option value="picnicking">Picnicking</option>
-                            <option value="public-transportation">Public Transportation</option>
-                            <option value="running">Running</option>
-                            <option value="scuba-diving">Scuba Diving</option>
-                            <option value="skiing">Skiing</option>
-                            <option value="snowboarding">Snowboarding</option>
-                            <option value="soccer">Soccer</option>
-                            <option value="sunbathing">Sunbathing</option>
-                            <option value="surfing">Surfing</option>
-                            <option value="tennis">Tennis</option>
-                            <option value="wildlife-observation">Wildlife Observation</option>
-                        </select>
-                    </div>
-                    <div class="task-details">
+                    <h2>Todo Title</h2>
+                    <input type="text" id="task-title" placeholder="Enter your task title...">
+                    <h3>Category</h3>
+                <select id="task-category" disabled>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="agricultural-work">Agricultural Work</option>
+                    <option value="baseball">Baseball</option>
+                    <option value="bbq">BBQs and Outdoor Cooking</option>
+                    <option value="camping">Camping</option>
+                    <option value="cleaning-maintenance">Cleaning and Maintenance</option>
+                    <option value="cycling">Cycling</option>
+                    <option value="construction-work">Construction Work</option>
+                    <option value="driving">Driving</option>
+                    <option value="exercise">Exercise</option>
+                    <option value="fishing">Fishing</option>
+                    <option value="gardening">Gardening</option>
+                    <option value="golfing">Golfing</option>
+                    <option value="hiking">Hiking</option>
+                    <option value="indoor">Indoor Activity</option>
+                    <option value="mental-health-activities">Mental Health Activities</option>
+                    <option value="outdoor-dining">Outdoor Dining</option>
+                    <option value="outdoor-events">Outdoor Events</option>
+                    <option value="photography">Photography</option>
+                    <option value="picnicking">Picnicking</option>
+                    <option value="public-transportation">Public Transportation</option>
+                    <option value="running">Running</option>
+                    <option value="scuba-diving">Scuba Diving</option>
+                    <option value="skiing">Skiing</option>
+                    <option value="snowboarding">Snowboarding</option>
+                    <option value="soccer">Soccer</option>
+                    <option value="sunbathing">Sunbathing</option>
+                    <option value="surfing">Surfing</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="wildlife-observation">Wildlife Observation</option>
+                </select>
+
+                    <div class="suggestion-options">
                         <input type="checkbox" id="auto-suggest">
                         <label for="auto-suggest">Suggest best time for the task</label>
-                        <div id="time-suggestion">
-                            <h4 id="time-frame">Select Time frame</h4>
-                            <select id="input-bar" disabled>
-                                <option value="24hours">In the next 24 Hours</option>
-                                <option value="week">In a Week's time</option>
-                                <option value="month">In a Month's time</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="task-details">
-                        <label id="location-label">Select Task Location</label>
-                        <div id="select-location">
-                            <div class="location-suggestions-container">
-                                <h4 id="task-location-label">Task Location</h4>
-                                <input type="text" id="task-location" placeholder="Enter task location...">
-                                <ul id="location-suggestions"></ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="date-time-pickers">
-                        <div class="date-time-picker">
-                            <label for="start-date">Starts:</label>
-                            <input type="date" id="start-date">
-                            <input type="time" id="start-time">
-                            <input type="checkbox" id="auto-suggest">
-                            <label for="auto-suggest" id="same-day"> Same day Task</label>
-                        </div>
 
-                        <div class="date-time-picker">
-                            <label for="end-date">Ends:</label>
-                            <input type="date" id="end-date">
-                            <input type="time" id="end-time">
-                            <button id="apply-details">APPLY</button>
-                            <button id="add-task"> + ADD TASK</button>
+                        <select id="suggestion-period" disabled>
+                            <option value="24hours">In the next 24 Hours</option>
+                            <option value="week">In a Week's time</option>
+                            <option value="month">In a Month's time</option>
+                        </select>
+
+                        <h3>Task Location</h3>
+                        <div class="location-suggestions-container">
+                            <input type="text" id="task-location" placeholder="Enter task location...">
+                            <ul id="location-suggestions"></ul>
                         </div>
+                        <div id="map"></div>
                     </div>
                 </div>
+
                 <!-- Right Section (Calendar and Date Pickers) -->
                 <div class="right-section">
-                    <div id="map"></div>
-                </div>
+                    <div class="date-time-pickers">
+                        <div class="date-time-picker">
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date">
+                            <label for="start-time">Start Time:</label>
+                            <input type="time" id="start-time">
+                        </div>
 
+                        <div class="date-time-picker">
+                            <label for="end-date">End Date:</label>
+                            <input type="date" id="end-date">
+                            <label for="end-time">End Time:</label>
+                            <input type="time" id="end-time">
+                        </div>
+
+                        <button id="confirm-dates">OK</button>
+                    </div>
                 </div>
             </div> <!-- End of Top Section -->
 
             <!-- Remarks Section -->
             <div class="remarks-section">
-                <h3 id="remarks-title">Remarks</h3>
+                <h3>Remarks</h3>
                 <p id="remarks-text">The app will provide suggestions or analysis here based on your selected time.</p>
             </div>
 
@@ -208,6 +199,7 @@
             </div>
         </div>
     </main>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>

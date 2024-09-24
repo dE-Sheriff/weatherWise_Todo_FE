@@ -3,12 +3,12 @@
 <head>
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css?v=1.7.1" />
     <link rel="stylesheet" href="/static/css/styles.css">
 
     <!-- FullCalendar and Leaflet JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js?v=1.7.1"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,11 @@
     
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // Initialize FullCalendar
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
 
         // Initialize Leaflet map with OpenStreetMap tiles
         var map = L.map('map').setView([51.505, -0.09], 13); // Default to London coordinates
@@ -47,7 +52,7 @@
         locationInput.addEventListener('change', function () {
           const locationValue = locationInput.value;
 
-          // For now, assume input is latitude,longitude
+          // Assuming input is latitude,longitude
           const [lat, lon] = locationValue.split(',').map(Number);
 
           if (lat && lon) {
@@ -56,7 +61,7 @@
               .bindPopup("Task Location")
               .openPopup();
           } else {
-            alert("Invalid coordinates. Please enter as 'latitude,longitude'");
+            alert("Invalid coordinates. Please enter as 'latitude,longitude'.");
           }
         });
 
@@ -87,7 +92,7 @@
             <div id="horizontal-line"></div>
             <div id="new-task">
                 <h4 id="option-tag-main">Todo Title</h4>
-                <input type="text" id="todo-title" placeholder="Enter your task title...">
+                <input type="text" id="task-title" placeholder="Enter your task title...">
                 <button id="clear-entery-button">CLEAR</button>
             </div>
         </div>
@@ -98,45 +103,44 @@
                 <div class="left-section">
                     <div class="task-details">
                         <h4 id="option-tag">Task Category</h4>
-                        <select id="task-category" disabled>
+                        <select id="input-bar" disabled>
                             <option value="" disabled selected>Select a category</option>
                             <option value="agricultural-work">Agricultural Work</option>
-                            <option value="baseball">Baseball</option>
                             <option value="bbq">BBQs and Outdoor Cooking</option>
                             <option value="camping">Camping</option>
-                            <option value="cleaning-maintenance">Cleaning and Maintenance</option>
-                            <option value="cycling">Cycling</option>
-                            <option value="construction-work">Construction Work</option>
-                            <option value="driving">Driving</option>
-                            <option value="exercise">Exercise</option>
-                            <option value="fishing">Fishing</option>
-                            <option value="gardening">Gardening</option>
-                            <option value="golfing">Golfing</option>
-                            <option value="hiking">Hiking</option>
-                            <option value="indoor">Indoor Activity</option>
-                            <option value="mental-health-activities">Mental Health Activities</option>
-                            <option value="outdoor-dining">Outdoor Dining</option>
-                            <option value="outdoor-events">Outdoor Events</option>
-                            <option value="photography">Photography</option>
-                            <option value="picnicking">Picnicking</option>
-                            <option value="public-transportation">Public Transportation</option>
-                            <option value="running">Running</option>
-                            <option value="scuba-diving">Scuba Diving</option>
-                            <option value="skiing">Skiing</option>
-                            <option value="snowboarding">Snowboarding</option>
-                            <option value="soccer">Soccer</option>
-                            <option value="sunbathing">Sunbathing</option>
-                            <option value="surfing">Surfing</option>
-                            <option value="tennis">Tennis</option>
-                            <option value="wildlife-observation">Wildlife Observation</option>
-                        </select>
-                    </div>
+                    <option value="cleaning-maintenance">Cleaning and Maintenance</option>
+                    <option value="cycling">Cycling</option>
+                    <option value="construction-work">Construction Work</option>
+                    <option value="driving">Driving</option>
+                    <option value="exercise">Exercise</option>
+                    <option value="fishing">Fishing</option>
+                    <option value="gardening">Gardening</option>
+                    <option value="golfing">Golfing</option>
+                    <option value="hiking">Hiking</option>
+                    <option value="indoor">Indoor Activity</option>
+                    <option value="mental-health-activities">Mental Health Activities</option>
+                    <option value="outdoor-dining">Outdoor Dining</option>
+                    <option value="outdoor-events">Outdoor Events</option>
+                    <option value="photography">Photography</option>
+                    <option value="picnicking">Picnicking</option>
+                    <option value="public-transportation">Public Transportation</option>
+                    <option value="running">Running</option>
+                    <option value="scuba-diving">Scuba Diving</option>
+                    <option value="skiing">Skiing</option>
+                    <option value="snowboarding">Snowboarding</option>
+                    <option value="soccer">Soccer</option>
+                    <option value="sunbathing">Sunbathing</option>
+                    <option value="surfing">Surfing</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="wildlife-observation">Wildlife Observation</option>
+                </select>
+            </div>
                     <div class="task-details">
                         <input type="checkbox" id="auto-suggest">
                         <label for="auto-suggest">Suggest best time for the task</label>
                         <div id="time-suggestion">
                             <h4 id="time-frame">Select Time frame</h4>
-                            <select id="input-bar" disabled>
+                            <select id="suggestion-period" disabled>
                                 <option value="24hours">In the next 24 Hours</option>
                                 <option value="week">In a Week's time</option>
                                 <option value="month">In a Month's time</option>
@@ -144,12 +148,11 @@
                         </div>
                     </div>
                     <div class="task-details">
-                        <label id="location-label">Select Task Location</label>
+                         <label id="location-label">Select Task Location</label>
                         <div id="select-location">
                             <div class="location-suggestions-container">
                                 <h4 id="task-location-label">Task Location</h4>
                                 <input type="text" id="task-location" placeholder="Enter task location...">
-                                <ul id="location-suggestions"></ul>
                             </div>
                         </div>
                     </div>
@@ -158,8 +161,6 @@
                             <label for="start-date">Starts:</label>
                             <input type="date" id="start-date">
                             <input type="time" id="start-time">
-                            <input type="checkbox" id="auto-suggest">
-                            <label for="auto-suggest" id="same-day"> Same day Task</label>
                         </div>
 
                         <div class="date-time-picker">
@@ -167,21 +168,20 @@
                             <input type="date" id="end-date">
                             <input type="time" id="end-time">
                             <button id="apply-details">APPLY</button>
-                            <button id="add-task"> + ADD TASK</button>
+                            <button id="add-task">+ ADD TASK</button>
                         </div>
                     </div>
                 </div>
-                <!-- Right Section (Calendar and Date Pickers) -->
+
+                <!-- Right Section (Map) -->
                 <div class="right-section">
                     <div id="map"></div>
                 </div>
-
-                </div>
-            </div> <!-- End of Top Section -->
+            </div>
 
             <!-- Remarks Section -->
             <div class="remarks-section">
-                <h3 id="remarks-title">Remarks</h3>
+                <h3>Remarks</h3>
                 <p id="remarks-text">The app will provide suggestions or analysis here based on your selected time.</p>
             </div>
 
@@ -197,7 +197,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Task rows will be dynamically inserted here -->
                         <tr>
                             <td>Example Task</td>
                             <td>10:00 AM</td>

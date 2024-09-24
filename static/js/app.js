@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-	const taskTitleInput = document.getElementById('task-title');
+	const taskTitleInput = document.getElementById('todo-title');
 	const categorySelect = document.getElementById('task-category');
 	const suggestionCheckbox = document.getElementById('auto-suggest');
 	const suggestionPeriod = document.getElementById('suggestion-period');
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const endDateInput = document.getElementById('end-date');
 	const taskLocationInput = document.getElementById('task-location');
 	const locationSuggestions = document.getElementById('location-suggestions');
+	const remarksElement = document.querySelector('.remarks'); // Adjusted to select by class
 
 	// Initialize Leaflet map
 	let map;
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function initLeafletMap(lat, lon) {
 		if (!map) {
 			// Initialize the map only if it hasn't been initialized
-			map = L.map('map').setView([lat, lon], 12);
+			map = L.map('map').setView([51.505, -0.09], 13);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
@@ -47,8 +48,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// Enable category selection after title length >= 10
 	taskTitleInput.addEventListener('input', function () {
-		categorySelect.disabled = this.value.length < 10;
+		const titleLength = this.value.length;
+		if (titleLength >= 10) {
+			categorySelect.disabled = false;
+		} else {
+			categorySelect.disabled = true;
+		}
 	});
+
+	// Disable category by default
+	categorySelect.disabled = true;
 
 	// Enable suggestion period dropdown
 	suggestionCheckbox.addEventListener('change', function () {
@@ -176,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// Update the remarks section
 	function updateRemarks(remarks) {
-		const remarksElement = document.getElementById('remarks');
 		if (remarksElement) {
 			remarksElement.textContent = remarks; // or .innerHTML if the content is HTML
 		}

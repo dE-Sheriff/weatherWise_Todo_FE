@@ -10,12 +10,6 @@
 	/* Left and right sections side by side */
 }
 
-.left-section,
-.right-section {
-	width: 48%;
-	/* Adjust as needed to fit the design */
-}
-
 .remarks-section,
 .task-table-section {
 	margin-top: 20px;
@@ -23,11 +17,120 @@
 	/* Full width */
 }
 
+#horizontal-line{
+	width: 100%;
+	height: 1px;
+	background-color: white;
+	margin-bottom: 10px;
+}
+
+#task-title, #todo-title{
+	display: inline;
+	margin: 20px;
+	color: rgba(0, 0, 0, 0.531);
+	padding-left: 20px;
+	display: inline-flex;
+	width: 75%;
+	height: 25px;
+}
+
+#option-tag, #task-location-label{
+	display: inline;
+	margin-left: 10px;
+	color: rgb(0, 0, 0);
+	margin-right: 15px;
+}
+
+#option-tag-main{
+		display: inline;
+		margin-left: 15px;
+		color: rgb(255, 255, 255);
+		padding-left: 10px;
+	}
+
+
+#input-bar, #task-category{
+	display: inline-flex;
+	margin-right: 0px;
+	width: 80%;
+	align-self: flex-end;
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+#location-label, #auto-suggest{
+	margin-left: 10px;
+}
+
+ #task-location {
+ 	display: inline-flex;
+ 	margin-right: 0px;
+ 	width: 80%;
+ 	align-self: flex-end;
+ 	height: 25px;
+ }
+
+#top-title{
+	text-align: center;
+	margin: 5px;
+	color: #ffffff;
+}
+
+#clear-entery-button{
+	text-align: center;
+	color: white;
+	background-color: #ae0000;
+	border-radius: 10px;
+	width: 10%;
+
+}
+
+#apply-details{
+	background-color: #ae0000;
+	margin-right: 20px;
+	width: 100px;
+	margin-left: 10px;
+
+}
+
+#add-task {
+	width: 150px;
+
+}
+
+#suggestion-period, #time-frame, #select-location{
+	display: inline;
+	margin-right: 10px;
+	margin-left: 0px;
+}
+
+#time-suggestion{
+	padding-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.task-details{
+	border: solid 1px rgba(128, 128, 128, 0.409);
+	padding-top: 10px;
+	width: 100%;
+	margin-bottom: 15px;
+	border-radius: 5px;	
+}
+
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
+}
+
+main {
+	font-family: Arial, sans-serif;
+	margin-right: 10%;
+	margin-left: 10%;
+	padding: 0;
+	background-color: hsl(0, 0%, 100%);
 }
 
 header {
@@ -35,8 +138,9 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px 20px;
-	background-color: #f8f8f8;
+	background-color: #0b0627;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid #ccc;
 }
 
 .logo img {
@@ -53,24 +157,45 @@ header {
 .header-buttons button {
 	padding: 10px 20px;
 	border: none;
-	background-color: #007bff;
+	background-color: #566677;
 	color: white;
 	cursor: pointer;
 }
 
 .container {
 	display: flex;
-	margin: 20px;
+	margin-top: 10px;
 }
 
-.left-section,
+
+
+.left-section{
+		width: 60%;
+		padding: 20px;
+		background-color: rgb(255, 255, 255);
+		margin-right: 20px;
+		border-radius: 5px;
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.367);
+		display: inline;
+	}
+
 .right-section {
-	flex: 1;
+	width: 40%;
 	padding: 20px;
-	background-color: white;
-	margin-right: 10px;
+	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.367);
+}
+
+
+.new-task-title {
+	margin-top: 25px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 200;
+	width: 100%;
+	background-color: #040f40;
+	border-radius: 10px;
 }
 
 .left-section h2,
@@ -81,16 +206,12 @@ header {
 input[type="text"],
 select,
 input[type="date"] {
-	width: 100%;
-	padding: 10px;
-	margin: 10px 0;
-	border: 1px solid #ccc;
+	width: 75%;
+	border: 1px solid #00000046;
 	border-radius: 4px;
+	height: 25px;
 }
 
-.right-section {
-	width: 50%;
-}
 
 button {
 	padding: 10px;
@@ -99,14 +220,36 @@ button {
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
+	text-align: center;
 }
+
+.remarks-section{
+	border-radius: 10px;
+	background-color: #595959;
+	padding: 2px;
+	padding-left: 10px;
+}
+
+#remarks-title{
+	color: white;
+}
+
+#remarks-text {
+	background-color: white;
+	border-radius: 5px;
+	padding: 8px;
+	text-align: center;
+	width: 98%;
+	color: #42050577;
+}
+
 
 button:hover {
 	background-color: #45a049;
 }
 
 .fc .fc-day-today {
-	background-color: rgb(125, 34, 70) !important;
+	background-color: rgb(100, 88, 148) !important;
 	/* Highlight today in yellow */
 }
 
@@ -115,31 +258,7 @@ button:hover {
 	/* Ensure background events are transparent by default */
 }
 
-/* Container for the calendar */
-.calendar-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 20px;
-	/* Adjust this for reasonable padding */
-	width: 100%;
-	/* Make sure it takes full width */
-}
 
-/* Calendar element */
-#calendar {
-	width: 100%;
-	max-width: 550px;
-	/* Maximum size for larger screens */
-	aspect-ratio: 1 / 1;
-	/* Ensures the square shape */
-	background-color: white;
-	/* Optional: set a background color */
-	border: 1px solid #ddd;
-	/* Optional: add a border */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	/* Optional: add a shadow */
-}
 
 /* Responsive behavior */
 @media (max-width: 768px) {
@@ -159,15 +278,23 @@ button:hover {
 	margin-bottom: 10px;
 }
 
-.date-time-picker label {
-	margin-right: 10px;
+#same-day {
+	width: 200px;
+	padding-left: 5px;
 }
+
+.date-time-picker label {
+	width: 40px;
+	margin-right: 20px;
+}
+
 
 .date-time-picker input[type="date"],
 .date-time-picker input[type="time"] {
 	margin-right: 20px;
 	padding: 5px;
 	width: auto;
+	
 }
 
 #confirm-dates {
@@ -176,13 +303,13 @@ button:hover {
 	background-color: #28a745;
 	color: white;
 	border: none;
-	cursor: pointer;
+	cursor: pointer; 	
 }
 
 #map {
-	height: 400px;
-	/* or any height you want */
 	width: 100%;
+	height: 400px;
+	/* Adjust height as needed */
 }
 
 #task-table {
@@ -211,6 +338,7 @@ button:hover {
 	position: absolute;
 	background: white;
 	width: calc(100% - 20px);
+	z-index: 1000;
 }
 
 #location-suggestions li {
@@ -224,6 +352,8 @@ button:hover {
 
 .location-suggestions-container {
 	position: relative;
+	margin-top: 10px;
+	margin-bottom: 5px;
 }
 
 #location-suggestions {
@@ -262,14 +392,14 @@ button:hover {
 
 /* Adjust the font size of day numbers */
 .fc .fc-daygrid-day-number {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: bold;
 	/* Adjust this value as needed */
 }
 
 /* Adjust the font size of the month and year title */
 .fc .fc-header-title {
-	font-size: 14px;
+	font-size: 12px;
 	/* Adjust this value as needed */
 	font-weight: bold;
 	/* Optional: Adjust font weight */
@@ -283,6 +413,7 @@ button:hover {
 	width: 30px;
 	/* Adjust the width of the button */
 	height: 30px;
+	justify-self: center;
 	/* Adjust the height of the button */
 }
 
