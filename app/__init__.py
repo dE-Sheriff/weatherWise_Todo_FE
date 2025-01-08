@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import requests
 from flask import Flask
 from config import Config
 from models import Task, db
