@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherWise - Home</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/static/img/LogoW.png" alt="WeatherWise Logo">
+        </div>
+        <div class="header-buttons">
+            <button class="my-task">My Tasks</button>
+            <button class="sign-out">Sign Out</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="new-task-title">
+            <h3 id="top-title">Add New Task</h3>
+            <div id="horizontal-line"></div>
+            <div id="new-task">
+                <h4 id="option-tag-main">Todo Title</h4>
+                <input type="text" id="todo-title" placeholder="Enter your task title...">
+                <button id="clear-entery-button">CLEAR</button>
+            </div>
+        </div>
+        <div class="container">
+            <!-- Left and Right Section Container -->
+            <div class="top-section">
+                <!-- Left Section -->
+                <div class="left-section">
+                    <div class="task-details">
+                        <form action="/" method="POST" id="task-cat">                        
+                        <!-- <h4 id="option-tag">Task Category</h4> -->
+                        <label for="task-category" id="taskName">Task Category</label>
+                        <select id="task-category" name="task" >
+                            <option value="" >Select a category</option>
+                            <option value="agricultural-work">Agricultural Work</option>
+                            <option value="baseball">Baseball</option>
+                            <option value="bbq">BBQs and Outdoor Cooking</option>
+                            <option value="camping">Camping</option>
+                            <option value="cleaning-maintenance">Cleaning and Maintenance</option>
+                            <option value="cycling">Cycling</option>
+                            <option value="construction-work">Construction Work</option>
+                            <option value="driving">Driving</option>
+                            <option value="exercise">Exercise</option>
+                            <option value="fishing">Fishing</option>
+                            <option value="gardening">Gardening</option>
+                            <option value="golfing">Golfing</option>
+                            <option value="hiking">Hiking</option>
+                            <option value="indoor">Indoor Activity</option>
+                            <option value="mental-health-activities">Mental Health Activities</option>
+                            <option value="outdoor-dining">Outdoor Dining</option>
+                            <option value="outdoor-events">Outdoor Events</option>
+                            <option value="photography">Photography</option>
+                            <option value="picnicking">Picnicking</option>
+                            <option value="public-transportation">Public Transportation</option>
+                            <option value="running">Running</option>
+                            <option value="scuba-diving">Scuba Diving</option>
+                            <option value="skiing">Skiing</option>
+                            <option value="snowboarding">Snowboarding</option>
+                            <option value="soccer">Soccer</option>
+                            <option value="sunbathing">Sunbathing</option>
+                            <option value="surfing">Surfing</option>
+                            <option value="tennis">Tennis</option>
+                            <option value="wildlife-observation">Wildlife Observation</option>
+                        </select>
+                        <!-- <button type="submit">Submit</button> -->
+                        </form>
+
+
+                    </div>
+                    <div class="task-details">
+                        <input type="checkbox" id="auto-suggest">
+                        <label for="auto-suggest">Suggest best time for the task</label>
+                        <div id="time-suggestion">
+                            <form action="/">
+                            <!-- <h4 id="time-frame">Select Time frame</h4> -->
+                            <label for="time" id="taskTime">Select Time frame</label>
+                            <select id="time">
+                                <option value="24hours">In the next 24 Hours</option>
+                                <option value="week">In a Week's time</option>
+                                <option value="month">In a Month's time</option>
+                            </select>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="task-details">
+                        <label id="location-label">Select Task Location</label>
+                        <div id="select-location">
+                            <div class="location-suggestions-container">
+                                <h4 id="task-location-label">Task Location</h4>
+                                <input type="text" id="task-location" placeholder="Enter task location...">
+                                <ul id="location-suggestions"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="date-time-pickers">
+                        <div class="date-time-picker">
+                            <label for="start-date">Starts:</label>
+                            <input type="date" id="start-date">
+                            <input type="time" id="start-time">
+                            <input type="checkbox" id="auto-suggest">
+                            <label for="auto-suggest" id="same-day"> Same day Task</label>
+                        </div>
+
+                        <div class="date-time-picker">
+                            <label for="end-date">Ends:</label>
+                            <input type="date" id="end-date">
+                            <input type="time" id="end-time">
+                            <button id="apply-details">APPLY</button>
+                            <button id="add-task"> + ADD TASK</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Section (Calendar and Date Pickers) -->
+                <div class="right-section">
+                    <div id="map"></div>
+                </div>
+
+                </div>
+            </div> <!-- End of Top Section -->
+
+            <!-- Remarks Section -->
+            <div class="remarks-section">
+                <h3 id="remarks-title">Remarks</h3>
+                <p id="remarks-text">The app will provide suggestions or analysis here based on your selected time.</p>
+            </div>
+
+            <!-- Task Table for Current Day -->
+            <div class="task-table-section">
+                <h3>Tasks for Today</h3>
+                <table id="task-table">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Scheduled Time</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Task rows will be dynamically inserted here -->
+                        <tr>
+                            <td>Example Task</td>
+                            <td>10:00 AM</td>
+                            <td>Good time to proceed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="./js/map.js"></script>
+
+    <!-- <script src="../js/index.js"></script> -->
+</body>
+</html>

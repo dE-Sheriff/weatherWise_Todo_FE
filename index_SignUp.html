@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./css/signup.css">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>WeatherWise - LogIn</title>
+    
+</head>
+
+<body>
+    <div class="main">
+
+        <div class="login_interface">
+            <div class="illustrative_art">
+                <img src="./img/Logo.png" alt="WeatherWise Logo" id="logo">
+                <img src="./img/signup5wuk.png" alt="SignUp art" id="art">
+            </div>
+            <div class="login_functions">
+                <span id="signup_heading">SignUp</span>
+                <div class="quick_login">
+                    <button class="login_items" id="google_sign">Countinue With Google</button>
+                    <i class='bx bxl-google'></i>
+                </div>
+                <div class="quick_login">
+                    <button class="login_items" id="facebook_sign">Countinue With Facebook</button>
+                    <i class='bx bxl-facebook-circle' id="fb_logo"></i>
+                </div>
+                <div class="quick_login">
+                    <button class="login_items" id="apple_sign">Countinue With Apple</button>
+                    <i class='bx bxl-apple' id="apple_logo"></i>
+                </div>
+                <input class="login_items" type="text"
+                id="enter_email" placeholder="Enter your Email...">
+                
+                <input class="login_items" type="text"
+                id="enter_password" placeholder="Enter your Password..." required>
+
+                <input class="login_items" type="text"
+                id="Confirm_password" placeholder="Confirm Password..." required>
+
+                <div class="login_assits">
+                    <label><input type="checkbox">Rember me.</label>
+                    <a href="/forgot_password">Forgot Password?</a>
+                </div>
+                <button class="LogIn" type="button" onclick="location.href='./index_login.html'">SignUp</button>
+                <span id="new_acc">Already have an account? <a href="./index_login.html">Sign In</a></span>
+            </div>
+        </div>
+
+    </div>
+    <script src="./js/login.js"></script>
+</body>
+</html>

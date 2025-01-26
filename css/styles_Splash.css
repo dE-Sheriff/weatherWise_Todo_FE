@@ -1,0 +1,183 @@
+
+.main{
+	display: inline-block;
+	place-items: center;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	overflow: auto;
+	position: fixed;
+	background-color: #000000;
+}
+
+
+.main::before {
+	content: '';
+    position: absolute;
+	background-size: cover;
+	background-image: url('../img/Normal lady.jpg');
+	inset: 0;
+	opacity: 0.6;
+}
+
+.logo-and-intro{
+	isolation: isolate;
+	display: flex;
+	margin-top: 10px;
+}
+
+.logo-large {
+	display: block;
+	width: 60%;
+	margin-top: -5px;
+}
+
+#logo_only {
+	margin-top: -5px;
+	margin-left: -100px;
+	margin-top: 70px;
+	width: 60%;
+}
+
+#quote {
+	text-align: center;
+	color: white;
+	margin-top: 25%;
+	font-size: 55px;
+	display: block;
+	margin-left: -10%;
+	margin-bottom: 10px;
+	animation: text 3s 1;
+
+}
+
+
+#title_only{
+	display: block;
+	margin-left: 5%;
+	width: 3000px;
+	margin-top: -5px;
+}
+.goto_app {
+	display: inline;
+	width: 60%;
+	padding-top: 40px;
+	align-items: center;
+}
+
+.goto-app {
+	display: block;
+	width: 40%;
+	border: none;
+	padding: 5px 10px;
+	margin-left: 25%;
+	border-radius: 5px;
+	font-size: 20px;
+	cursor: pointer;
+	align-self: center;
+	background-color: rgb(3, 94, 35);
+	color: #ffffff;
+	animation-delay: 3s;
+}
+
+#logo_title img {
+	display: inline;
+	margin: 50px auto;
+	max-width: 300px;
+	margin: 5%;
+	width: 40%;
+	padding: 20px;
+}
+
+header {
+	isolation: isolate;
+	display: inline;
+	align-items: center, top;
+	width: 10%;
+	padding: 10px 20px;
+}
+
+.logo img {
+	height: 30%;
+	width: 20%;
+}
+
+/* Header styles */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width:auto;
+	padding: 10px 20px;
+	background-color: rgba(255, 255, 255, 0);
+
+}
+
+header .header-buttons {
+	display: flex;
+	gap: 10px;
+}
+
+header .header-buttons button {
+	border: none;
+	padding: 5px 20px;
+	border-radius: 5px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+header .header-buttons .my-task {
+	background-color: #ffffff;
+	color: rgb(0, 0, 0);
+
+}
+
+header .header-buttons .sign-out {
+	background-color: #000000;
+	color: white;
+}
+
+header .header-buttons button:hover {
+	opacity: 0.8;
+}
+.goto-app:hover {
+	opacity: 0.8;
+}
+
+/* Large logo styles */
+.logo-large {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.logo-large img {
+	max-width: 400px;
+	width: 100%;
+	height: auto;
+	padding-left: 10%;
+}
+
+/* Responsive design */
+@media (max-width: 800px) {
+	header {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	header .header-buttons {
+		margin-top: 20px;
+	}
+}
+
+@keyframes text {
+	0% {
+        color: #000000;
+		margin-top: 15%;
+    }
+    100% {
+        opacity: 1;
+    }
+}
